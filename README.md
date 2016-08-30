@@ -8,7 +8,7 @@ Integrates [Auth0](https://auth0.com/) [JWT](https://jwt.io) with [Spring Boot](
 
 Gradle
 ```
-compile('com.github.jwt.auth0:auth0-jwt-spring-boot:0.0.1')
+compile('com.github.jwt.auth0:auth0-jwt-spring-boot:0.0.2')
 ```
 
 ```
@@ -22,7 +22,7 @@ repositories {
 ## Usage
 
 Add `@EnableAuth0JwtSpringBoot` to the Application-class (the class containing the `@SpringBootApplication`).  
-This will enable the auth0 JWT integration and also include the Jasypt encryptet properties. 
+This will enable the auth0 JWT integration and also include the [jasypt-spring-boot](https://github.com/ulisesbocchio/jasypt-spring-boot).
 
 ## Configuration
 
