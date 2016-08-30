@@ -1,6 +1,7 @@
 package com.github.jwt.auth0.web;
 
 import com.github.jwt.auth0.config.Auth0JwtConfig;
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
@@ -19,6 +20,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
+@EnableEncryptableProperties
 @Component
 public class JwtHeader {
 
