@@ -24,7 +24,6 @@ public class Auth0Metadata {
     private JwtHeader jwtHeader;
 
     public Optional<String> get() {
-        Optional<String> jwt = jwtHeader.getJwt();
         Map<String, String> claims = jwtHeader.get();
         String metadata = claims.get(APP_METADATA);
         if (StringUtils.isEmpty(metadata)) {
