@@ -5,7 +5,7 @@
 
     <groupId>com.github.jwt.auth0</groupId>
     <artifactId>auth0-jwt-spring-boot</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
 
     <parent>
@@ -139,7 +139,7 @@
         <repository>
             <id>bintray-thomasbem-maven</id>
             <name>thomasbem-maven</name>
-            <url>https://api.bintray.com/maven/thomasbem/maven/spring-session-jwt/;publish=1</url>
+            <url>https://api.bintray.com/maven/thomasbem/maven/auth0-jwt-spring-boot/;publish=1</url>
         </repository>
     </distributionManagement>
 </project>
