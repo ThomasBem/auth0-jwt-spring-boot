@@ -23,14 +23,8 @@ public class Auth0JwtConfig {
     @Value("${jwt-key:jwt}")
     private String jwtKey;
 
-    @Value("${jwt-test-mode:false")
-    private String jwtTestMode;
-
     public boolean isJwtSecretEncoded() {
         return Boolean.valueOf(jwtSecretEncoded);
     }
 
-    public boolean isJwtTestMode() {
-        return Boolean.valueOf(jwtTestMode);
-    }
 }

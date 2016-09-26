@@ -5,15 +5,15 @@ import com.github.jwt.auth0.web.JwtHeader;
 import com.github.jwt.auth0.web.JwtHeaderImpl;
 import com.github.jwt.auth0.web.JwtHeaderMock;
 import com.github.jwt.auth0.web.RequestUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Auth0JwtInitializer {
 
-    @Autowired
-    private Auth0JwtConfig auth0JwtConfig;
+    @Value("${jwt-test-mode:false")
+    private String jwtTestMode;
 
     @Bean
     public Auth0Metadata auth0Metadata() {
@@ -32,7 +32,8 @@ public class Auth0JwtInitializer {
 
     @Bean
     public JwtHeader jwtHeader() {
-        if (auth0JwtConfig.isJwtTestMode()) {
+        Boolean isJwtTestMode = Boolean.valueOf(jwtTestMode);
+        if (isJwtTestMode) {
             return new JwtHeaderMock();
         } else {
             return new JwtHeaderImpl();
