@@ -1,6 +1,6 @@
 package com.github.jwt.auth0
 
-import com.github.jwt.auth0.web.JwtHeaderImpl
+import com.github.jwt.auth0.web.JwtHeader
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ContextConfiguration
@@ -15,7 +15,7 @@ class TestApplicationSpec extends Specification {
     WebApplicationContext context
 
     @Autowired
-    private JwtHeaderImpl jwtHeader
+    private JwtHeader jwtHeader
 
     def "Initialize Auth0 JWT Spring beans"() {
         when:

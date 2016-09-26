@@ -35,7 +35,7 @@ public class JwtHeaderMock implements JwtHeader {
     @Override
     public Optional<String> getJwt() {
         Map<String, Object> claimMap = new HashMap<>(claims);
-        String jwt = Jwts.builder().setClaims(claimMap).signWith(SignatureAlgorithm.HS256, auth0JwtConfig.getJwtSecret()).compact();
+        String jwt = Jwts.builder().setClaims(claimMap).signWith(SignatureAlgorithm.HS256, auth0JwtConfig.getJwtSecret().getBytes()).compact();
         return Optional.of(jwt);
     }
 }

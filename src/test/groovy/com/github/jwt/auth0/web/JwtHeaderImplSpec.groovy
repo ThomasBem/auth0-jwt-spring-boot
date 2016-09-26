@@ -8,7 +8,7 @@ import spock.lang.Specification
 
 import javax.servlet.http.HttpServletRequest
 
-class JwtHeaderSpec extends Specification {
+class JwtHeaderImplSpec extends Specification {
     private JwtHeaderImpl jwtHeader
     private Auth0JwtConfig config
     private HttpServletRequest request
