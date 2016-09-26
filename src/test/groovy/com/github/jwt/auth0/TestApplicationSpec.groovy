@@ -3,10 +3,12 @@ package com.github.jwt.auth0
 import com.github.jwt.auth0.web.JwtHeader
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.web.context.WebApplicationContext
 import spock.lang.Specification
 
+@ActiveProfiles("test")
 @ContextConfiguration
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class TestApplicationSpec extends Specification {
@@ -22,6 +24,6 @@ class TestApplicationSpec extends Specification {
         def claims = jwtHeader.get()
 
         then:
-        claims.size() == 0
+        claims.size() > 0
     }
 }

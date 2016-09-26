@@ -28,7 +28,7 @@ public class RequestUtil {
     private RestTemplate restTemplate;
 
     @Autowired
-    private JwtHeaderImpl jwtHeader;
+    private JwtHeader jwtHeader;
 
     public <T> ResponseEntity<T> exchange(String url, HttpMethod method, Class<T> responseType) {
         try {
