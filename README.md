@@ -8,7 +8,7 @@ Integrates [Auth0](https://auth0.com/) [JWT](https://jwt.io) with [Spring Boot](
 
 Gradle
 ```
-compile('com.github.jwt.auth0:auth0-jwt-spring-boot:0.0.9')
+compile('com.github.jwt.auth0:auth0-jwt-spring-boot:0.0.10')
 ```
 
 ```
@@ -31,4 +31,5 @@ This will enable the auth0 JWT integration and also include the [jasypt-spring-b
 | basic-auth.username | Basic authentication header username | |
 | basic-auth.password | Basic authentication header password | |
 | jwt-secret | Secret used to verify JWT (from auth0) | |
+| jwt-encoded-secret | If the secret configured with 'jwt-secret' is base64 url-safe encoded | true |
 | jwt-key | The key used to store the jwt in the header. If the token is not found using 'jwt-key', it will try to use the standard Authorization-header | jwt |

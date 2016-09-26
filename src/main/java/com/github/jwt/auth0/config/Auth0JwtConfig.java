@@ -17,6 +17,20 @@ public class Auth0JwtConfig {
     @Value("${jwt-secret:}")
     private String jwtSecret;
 
+    @Value("${jwt-secret-encoded:true}")
+    private String jwtSecretEncoded;
+
     @Value("${jwt-key:jwt}")
     private String jwtKey;
+
+    @Value("${jwt-test-mode:false")
+    private String jwtTestMode;
+
+    public boolean isJwtSecretEncoded() {
+        return Boolean.valueOf(jwtSecretEncoded);
+    }
+
+    public boolean isJwtTestMode() {
+        return Boolean.valueOf(jwtTestMode);
+    }
 }

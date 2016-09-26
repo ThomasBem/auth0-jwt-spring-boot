@@ -1,7 +1,7 @@
 package com.github.jwt.auth0.auth0;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.jwt.auth0.web.JwtHeader;
+import com.github.jwt.auth0.web.JwtHeaderImpl;
 import com.jayway.jsonpath.JsonPath;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class Auth0Metadata {
     private static final String APP_METADATA = "app_metadata";
 
     @Autowired
-    private JwtHeader jwtHeader;
+    private JwtHeaderImpl jwtHeader;
 
     public Optional<String> get() {
         Map<String, String> claims = jwtHeader.get();

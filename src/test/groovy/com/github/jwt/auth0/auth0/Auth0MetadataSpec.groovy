@@ -1,17 +1,17 @@
 package com.github.jwt.auth0.auth0
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.github.jwt.auth0.web.JwtHeader
+import com.github.jwt.auth0.web.JwtHeaderImpl
 import spock.lang.Specification
 
 class Auth0MetadataSpec extends Specification {
-    def permissionsMetadata = "{permissions=[{app=assettracker, role=USER, company=FMC, organisation=WAS}, {app=well-life, role=USER, company=FMC, organisation=WAS}, {app=sds, role=USER, company=FMC, organisation=WAS}, {app=frm, role=USER, company=FMC, organisation=WAS}], roles=[ROLE_USER]}"
+    def permissionsMetadata = "{permissions=[{app=testApp1, role=USER, company=testCompany1, organisation=testOrg1}, {app=testApp2, role=USER, company=testCompany2, organisation=testOrg2}, {app=testApp3, role=USER, company=testCompany3, organisation=testOrg3}, {app=testApp4, role=USER, company=testCompany4, organisation=testOrg4}], roles=[ROLE_USER]}"
 
     private Auth0Metadata auth0Metadata
-    private JwtHeader jwtHeader
+    private JwtHeaderImpl jwtHeader
 
     void setup() {
-        jwtHeader = Mock(JwtHeader)
+        jwtHeader = Mock(JwtHeaderImpl)
         auth0Metadata = new Auth0Metadata(jwtHeader: jwtHeader)
     }
 
@@ -45,7 +45,7 @@ class Auth0MetadataSpec extends Specification {
 
     def "Is authorized"() {
         when:
-        def authorized = auth0Metadata.isAuthorized("assettracker")
+        def authorized = auth0Metadata.isAuthorized("testapp1")
 
         then:
         1 * jwtHeader.get() >> ["app_metadata": permissionsMetadata]

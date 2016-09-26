@@ -6,11 +6,11 @@ import spock.lang.Specification
 
 class RequestUtilSpec extends Specification {
     private RequestUtil requestUtil
-    private JwtHeader jwtHeader
+    private JwtHeaderImpl jwtHeader
     private Auth0JwtConfig config
 
     void setup() {
-        jwtHeader = Mock(JwtHeader)
+        jwtHeader = Mock(JwtHeaderImpl)
         config = Mock(Auth0JwtConfig)
         requestUtil = new RequestUtil(jwtHeader: jwtHeader, config: config)
     }
