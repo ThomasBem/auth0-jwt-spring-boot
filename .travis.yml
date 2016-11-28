@@ -4,3 +4,5 @@ jdk:
 install: true
 script:
  ./mvnw package
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
