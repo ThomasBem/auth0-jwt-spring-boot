@@ -4,6 +4,7 @@
 [![codecov](https://codecov.io/gh/ThomasBem/auth0-jwt-spring-boot/branch/master/graph/badge.svg)](https://codecov.io/gh/ThomasBem/auth0-jwt-spring-boot)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/89ea619c2ad34aadaf89bab23afd7c91)](https://www.codacy.com/app/thomasbem/auth0-jwt-spring-boot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ThomasBem/auth0-jwt-spring-boot&amp;utm_campaign=Badge_Grade)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/89ea619c2ad34aadaf89bab23afd7c91)](https://www.codacy.com/app/thomasbem/auth0-jwt-spring-boot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ThomasBem/auth0-jwt-spring-boot&amp;utm_campaign=Badge_Coverage)
+[![codebeat badge](https://codebeat.co/badges/fdb29997-4808-4cd9-819e-01b9c909f181)](https://codebeat.co/projects/github-com-thomasbem-auth0-jwt-spring-boot)
 
 
 Integrates [Auth0](https://auth0.com/) [JWT](https://jwt.io) with [Spring Boot](http://projects.spring.io/spring-boot).
