@@ -11,3 +11,4 @@ script:
 after_success:
   - bash <(curl -s https://codecov.io/bash)
   - ~/jpm/bin/codacy-coverage-reporter -l Java -r target/site/jacoco/jacoco.xml
+  - mvn clean test jacoco:report coveralls:report
