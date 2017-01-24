@@ -4,6 +4,7 @@ import com.github.jwt.auth0.config.Auth0JwtConfig;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
@@ -11,6 +12,9 @@ import java.util.Map;
 import java.util.Optional;
 
 public class JwtHeaderMock implements JwtHeader {
+
+    @Value("${jwt-test-token:}")
+    private String jwtTestToken;
 
     @Autowired
     private Auth0JwtConfig auth0JwtConfig;
@@ -34,8 +38,12 @@ public class JwtHeaderMock implements JwtHeader {
 
     @Override
     public Optional<String> getJwt() {
-        Map<String, Object> claimMap = new HashMap<>(claims);
-        String jwt = Jwts.builder().setClaims(claimMap).signWith(SignatureAlgorithm.HS256, auth0JwtConfig.getJwtSecret().getBytes()).compact();
-        return Optional.of(jwt);
+        if (jwtTestToken == null) {
+            Map<String, Object> claimMap = new HashMap<>(claims);
+            String jwt = Jwts.builder().setClaims(claimMap).signWith(SignatureAlgorithm.HS256, auth0JwtConfig.getJwtSecret().getBytes()).compact();
+            return Optional.of(jwt);
+        } else {
+            return Optional.of(jwtTestToken);
+        }
     }
 }

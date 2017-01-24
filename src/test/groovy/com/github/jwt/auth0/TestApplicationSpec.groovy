@@ -10,7 +10,7 @@ import spock.lang.Specification
 
 @ActiveProfiles("test")
 @ContextConfiguration
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = "jwt-test-mode=true")
 class TestApplicationSpec extends Specification {
 
     @Autowired

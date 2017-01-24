@@ -14,7 +14,7 @@ Integrates [Auth0](https://auth0.com/) [JWT](https://jwt.io) with [Spring Boot](
 
 Gradle
 ```
-compile('com.github.jwt.auth0:auth0-jwt-spring-boot:0.0.13')
+compile('com.github.jwt.auth0:auth0-jwt-spring-boot:1.0.0')
 ```
 
 ```
@@ -42,3 +42,14 @@ To test locally enable jwt-test-mode and configure jwt-secret. This will return 
 | jwt-encoded-secret | If the secret configured with 'jwt-secret' is base64 url-safe encoded | true |
 | jwt-key | The key used to store the jwt in the header. If the token is not found using 'jwt-key', it will try to use the standard Authorization-header | jwt |
 | jwt-test-mode | Enable test mode to return mock JWT | false |
+| jwt-test-token | If jwt-test-mode is enabled, return the configured token. If no token is configured, the default test-token is returned | |
+
+
+### Default test-token
+
+ - user_id: 123
+ - name: john.doe@test.com
+ - nickname: john.doe
+ - email: john.doe@test.com
+ - email_verified: true
+ - picture: https://s.gravatar.com/avatar
