@@ -1,10 +1,13 @@
 package com.github.jwt.auth0.web;
 
 import com.github.jwt.auth0.config.Auth0JwtConfig;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
@@ -33,6 +36,14 @@ public class JwtHeaderMock implements JwtHeader {
 
     @Override
     public Map<String, String> get() {
+        if (!StringUtils.isEmpty(jwtTestToken)) {
+            claims.clear();
+
+            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(auth0JwtConfig.getJwtSecret().getBytes()).parseClaimsJws(jwtTestToken);
+            Claims claimsBody = claimsJws.getBody();
+            claimsBody.entrySet().forEach(claim -> claims.put(claim.getKey(), String.valueOf(claim.getValue())));
+        }
+
         return claims;
     }
 
