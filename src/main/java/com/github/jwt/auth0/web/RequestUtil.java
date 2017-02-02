@@ -42,10 +42,7 @@ public class RequestUtil {
 
     HttpEntity createRequestEntity() {
         HttpHeaders header = createAuthorizationHeader();
-        Optional<String> jwtToken = jwtHeader.getJwt();
-        if (jwtToken.isPresent()) {
-            header.add(config.getJwtKey(), jwtToken.get());
-        }
+        jwtHeader.getJwt().ifPresent(jwtToken -> header.add(config.getJwtKey(), jwtToken));
         return new HttpEntity<>(null, header);
     }
 
