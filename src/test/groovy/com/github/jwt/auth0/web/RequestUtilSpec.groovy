@@ -1,18 +1,36 @@
 package com.github.jwt.auth0.web
 
 import com.github.jwt.auth0.config.Auth0JwtConfig
+import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpMethod
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.web.client.HttpClientErrorException
+import org.springframework.web.client.RestTemplate
 import spock.lang.Specification
 
 class RequestUtilSpec extends Specification {
     private RequestUtil requestUtil
     private JwtHeaderImpl jwtHeader
     private Auth0JwtConfig config
+    private RestTemplate restTemplate
 
     void setup() {
+        restTemplate = Mock(RestTemplate)
         jwtHeader = Mock(JwtHeaderImpl)
         config = Mock(Auth0JwtConfig)
-        requestUtil = new RequestUtil(jwtHeader: jwtHeader, config: config)
+        requestUtil = new RequestUtil(jwtHeader: jwtHeader, config: config, restTemplate: restTemplate)
+    }
+
+    def "Return status code on HttpClientErrorException"() {
+        when:
+        def responseEntity = requestUtil.exchange("http://localhost", HttpMethod.GET, String)
+
+        then:
+        1 * restTemplate.exchange(_ as String, _ as HttpMethod, _ as HttpEntity, _ as Class) >> { throw new HttpClientErrorException(HttpStatus.NOT_FOUND) }
+        1 * jwtHeader.getJwt() >> Optional.empty()
+        responseEntity.statusCode == HttpStatus.NOT_FOUND
     }
 
     def "No authorization header when missing username/password"() {
