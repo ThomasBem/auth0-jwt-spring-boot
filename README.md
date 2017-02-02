@@ -43,7 +43,7 @@ String nickname = auth0Jwt.getProperty("nickname");
 ```
 
 **Get object with JsonPath**  
-Get object from the JWT using JsonPath. In this example an array of permissions is configured in auth0:
+Get object from app_metadata in the JWT using JsonPath. In this example an array of permissions is configured in auth0:
 ```
 Permission[] permissions = auth0Jwt.get("$.permissions[*]", Permission[].class);
 ```
