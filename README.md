@@ -14,7 +14,7 @@ Integrates [Auth0](https://auth0.com/) [JWT](https://jwt.io) with [Spring Boot](
 
 Gradle
 ```
-compile('com.github.jwt.auth0:auth0-jwt-spring-boot:2.0.0')
+compile('com.github.jwt.auth0:auth0-jwt-spring-boot:2.0.1')
 ```
 
 ```
@@ -40,6 +40,12 @@ This class helps you with extracting information from the JWT. It can be used in
 To get a property in the JWT, for example nickname:
 ```
 String nickname = auth0Jwt.getProperty("nickname");
+```
+
+**Get name**  
+To get a formatted name from the Auth0 nickname:
+```
+String name = auth0Jwt.getName();
 ```
 
 **Get object with JsonPath**  

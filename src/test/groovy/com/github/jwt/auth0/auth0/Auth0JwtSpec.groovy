@@ -22,6 +22,29 @@ class Auth0JwtSpec extends Specification {
         auth0Jwt = new Auth0Jwt(jwtHeader: jwtHeader, config: config, objectMapper: new ObjectMapper())
     }
 
+    def "Get name"() {
+        when:
+        def name = auth0Jwt.getName()
+
+        then:
+        name.get() == 'John Doe'
+
+    }
+
+    def "Return Optional.Empty when nickname not present"() {
+        given:
+        jwtHeader = Mock(JwtHeader) {
+            getJwt() >> Optional.of('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ')
+        }
+        auth0Jwt = new Auth0Jwt(jwtHeader: jwtHeader, config: config, objectMapper: new ObjectMapper())
+
+        when:
+        def name = auth0Jwt.getName()
+
+        then:
+        !name.isPresent()
+    }
+
     def "Get property"() {
         when:
         def nickname = auth0Jwt.getProperty('nickname')

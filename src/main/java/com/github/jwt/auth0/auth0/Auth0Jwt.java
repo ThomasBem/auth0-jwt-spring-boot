@@ -11,11 +11,10 @@ import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -37,6 +36,16 @@ public class Auth0Jwt {
         return Optional.ofNullable(jwtData.get(key));
     }
 
+    public Optional<String> getName() {
+        Optional<String> nickname = getProperty("nickname");
+        if (nickname.isPresent()) {
+            String[] names = nickname.get().split("\\.");
+            String name = Arrays.stream(names).map(StringUtils::capitalize).collect(Collectors.joining(" "));
+            return Optional.of(name);
+        }
+        return Optional.empty();
+    }
+
     public <T> T get(String jsonPath, Class<T> type) {
         Map<String, String> jwtData = getJwtData();
         String metadata = jwtData.get(APP_METADATA);
@@ -45,7 +54,7 @@ public class Auth0Jwt {
         } else {
             try {
                 return mapToObject(jsonPath, metadata, type);
-            } catch(PathNotFoundException e) {
+            } catch (PathNotFoundException e) {
                 log.warn(e.getMessage());
                 return null;
             }
