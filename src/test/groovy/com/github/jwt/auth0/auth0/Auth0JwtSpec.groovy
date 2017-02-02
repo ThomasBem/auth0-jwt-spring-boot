@@ -62,4 +62,12 @@ class Auth0JwtSpec extends Specification {
         permissions[0].app == 'my-app'
     }
 
+    def "Return null if JsonPath does not exist"() {
+        when:
+        def permissions = auth0Jwt.get('$.invalid', Permission[])
+
+        then:
+        permissions == null
+    }
+
 }

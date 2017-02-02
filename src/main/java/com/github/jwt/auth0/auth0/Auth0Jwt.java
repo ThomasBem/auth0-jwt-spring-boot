@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jwt.auth0.config.Auth0JwtConfig;
 import com.github.jwt.auth0.web.JwtHeader;
 import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.PathNotFoundException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -42,7 +43,12 @@ public class Auth0Jwt {
         if (metadata == null || "".equals(metadata)) {
             throw new IllegalArgumentException("Could not find app_metadata in jwt claims");
         } else {
-            return mapToObject(jsonPath, metadata, type);
+            try {
+                return mapToObject(jsonPath, metadata, type);
+            } catch(PathNotFoundException e) {
+                log.warn(e.getMessage());
+                return null;
+            }
         }
     }
 
