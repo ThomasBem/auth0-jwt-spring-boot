@@ -9,6 +9,8 @@ import spock.lang.Specification
 import javax.servlet.http.HttpServletRequest
 
 class JwtHeaderImplSpec extends Specification {
+    private final String jwt = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0ZXN0LWtleSI6InRlc3QtdmFsdWUifQ.INFA_0gyIYnY7G_N8XzLaBxlE94YYRIX1Cgc76yVyOM'
+
     private JwtHeaderImpl jwtHeader
     private Auth0JwtConfig config
     private HttpServletRequest request
@@ -26,7 +28,7 @@ class JwtHeaderImplSpec extends Specification {
         def jwt = jwtHeader.getJwt()
 
         then:
-        1 * request.getHeader(_ as String) >> "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0ZXN0LWtleSI6InRlc3QtdmFsdWUifQ.INFA_0gyIYnY7G_N8XzLaBxlE94YYRIX1Cgc76yVyOM"
+        1 * request.getHeader(_ as String) >> this.jwt
         1 * config.isJwtSecretEncoded() >> true
         1 * config.getJwtSecret() >> Base64.encodeBase64URLSafeString("secret".bytes)
         jwt.isPresent()
@@ -37,26 +39,23 @@ class JwtHeaderImplSpec extends Specification {
         def jwt = jwtHeader.getJwt()
 
         then:
-        1 * request.getHeader(_ as String) >> "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0ZXN0LWtleSI6InRlc3QtdmFsdWUifQ.INFA_0gyIYnY7G_N8XzLaBxlE94YYRIX1Cgc76yVyOM"
+        1 * request.getHeader(_ as String) >> this.jwt
         1 * config.isJwtSecretEncoded() >> false
         1 * config.getJwtSecret() >> "secret"
         jwt.isPresent()
     }
 
     def "Get JWT from authorization header"() {
-        given:
-        def jwtString = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0ZXN0LWtleSI6InRlc3QtdmFsdWUifQ.INFA_0gyIYnY7G_N8XzLaBxlE94YYRIX1Cgc76yVyOM"
-
         when:
         def jwt = jwtHeader.getJwt()
 
         then:
         1 * request.getHeader("jwt") >> null
-        1 * request.getHeader(HttpHeaders.AUTHORIZATION) >> "Bearer ${jwtString}"
+        1 * request.getHeader(HttpHeaders.AUTHORIZATION) >> "Bearer ${this.jwt}"
         1 * config.isJwtSecretEncoded() >> true
         1 * config.getJwtSecret() >> Base64.encodeBase64URLSafeString("secret".bytes)
         jwt.isPresent()
-        jwt.get() == jwtString
+        jwt.get() == this.jwt
     }
 
     def "Throw JwtException when unable to parse JWT"() {
@@ -64,7 +63,7 @@ class JwtHeaderImplSpec extends Specification {
         jwtHeader.getJwt()
 
         then:
-        1 * request.getHeader(_ as String) >> "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0ZXN0LWtleSI6InRlc3QtdmFsdWUifQ.INFA_0gyIYnY7G_N8XzLaBxlE94YYRIX1Cgc76yVyOM"
+        1 * request.getHeader(_ as String) >> jwt
         1 * config.isJwtSecretEncoded() >> true
         1 * config.getJwtSecret() >> Base64.encodeBase64URLSafeString("notsecret".bytes)
         thrown(JwtException)
@@ -75,8 +74,7 @@ class JwtHeaderImplSpec extends Specification {
         def claims = jwtHeader.get()
 
         then:
-
-        1 * request.getHeader(_ as String) >> "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0ZXN0LWtleSI6InRlc3QtdmFsdWUifQ.INFA_0gyIYnY7G_N8XzLaBxlE94YYRIX1Cgc76yVyOM"
+        1 * request.getHeader(_ as String) >> jwt
         2 * config.isJwtSecretEncoded() >> true
         2 * config.getJwtSecret() >> Base64.encodeBase64URLSafeString("secret".bytes)
         claims.size() == 1

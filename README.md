@@ -32,6 +32,24 @@ This will enable the auth0 JWT integration and also include the [jasypt-spring-b
 
 To test locally enable jwt-test-mode and configure jwt-secret. This will return a mock JWT that is encrypted with the configured secret.
 
+### Auth0Jwt
+
+This class helps you with extracting information from the JWT. It can be used in your Spring component by autowiring it in.
+
+**Get property**  
+To get a property in the JWT, for example nickname:
+```
+String nickname = auth0Jwt.getProperty("nickname");
+```
+
+**Get object with JsonPath**  
+Get object from app_metadata in the JWT using JsonPath. In this example an array of permissions is configured in auth0:
+```
+Permission[] permissions = auth0Jwt.get("$.permissions[*]", Permission[].class);
+```
+[JsonPath documentation](https://github.com/jayway/JsonPath)
+
+
 ## Configuration
 
 | Key | Description | Default value |

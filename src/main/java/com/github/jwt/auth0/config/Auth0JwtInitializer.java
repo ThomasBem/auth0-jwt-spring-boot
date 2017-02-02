@@ -1,6 +1,5 @@
 package com.github.jwt.auth0.config;
 
-import com.github.jwt.auth0.auth0.Auth0Metadata;
 import com.github.jwt.auth0.web.JwtHeader;
 import com.github.jwt.auth0.web.JwtHeaderImpl;
 import com.github.jwt.auth0.web.JwtHeaderMock;
@@ -16,11 +15,6 @@ public class Auth0JwtInitializer {
 
     @Value("${jwt-test-mode:false}")
     private String jwtTestMode;
-
-    @Bean
-    public Auth0Metadata auth0Metadata() {
-        return new Auth0Metadata();
-    }
 
     @Bean
     public Auth0JwtConfig auth0JwtConfig() {
