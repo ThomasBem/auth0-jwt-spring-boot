@@ -29,8 +29,7 @@ class JwtHeaderImplSpec extends Specification {
 
         then:
         1 * request.getHeader(_ as String) >> this.jwt
-        1 * config.isJwtSecretEncoded() >> true
-        1 * config.getJwtSecret() >> Base64.encodeBase64URLSafeString("secret".bytes)
+        1 * config.getSecret() >> "secret".bytes
         jwt.isPresent()
     }
 
@@ -40,8 +39,7 @@ class JwtHeaderImplSpec extends Specification {
 
         then:
         1 * request.getHeader(_ as String) >> this.jwt
-        1 * config.isJwtSecretEncoded() >> false
-        1 * config.getJwtSecret() >> "secret"
+        1 * config.getSecret() >> "secret".bytes
         jwt.isPresent()
     }
 
@@ -52,8 +50,7 @@ class JwtHeaderImplSpec extends Specification {
         then:
         1 * request.getHeader("jwt") >> null
         1 * request.getHeader(HttpHeaders.AUTHORIZATION) >> "Bearer ${this.jwt}"
-        1 * config.isJwtSecretEncoded() >> true
-        1 * config.getJwtSecret() >> Base64.encodeBase64URLSafeString("secret".bytes)
+        1 * config.getSecret() >> "secret".bytes
         jwt.isPresent()
         jwt.get() == this.jwt
     }
@@ -64,8 +61,7 @@ class JwtHeaderImplSpec extends Specification {
 
         then:
         1 * request.getHeader(_ as String) >> jwt
-        1 * config.isJwtSecretEncoded() >> true
-        1 * config.getJwtSecret() >> Base64.encodeBase64URLSafeString("notsecret".bytes)
+        1 * config.getSecret() >> "notsecret".bytes
         thrown(JwtException)
     }
 
@@ -75,8 +71,7 @@ class JwtHeaderImplSpec extends Specification {
 
         then:
         1 * request.getHeader(_ as String) >> jwt
-        2 * config.isJwtSecretEncoded() >> true
-        2 * config.getJwtSecret() >> Base64.encodeBase64URLSafeString("secret".bytes)
+        2 * config.getSecret() >> "secret".bytes
         claims.size() == 1
     }
 }

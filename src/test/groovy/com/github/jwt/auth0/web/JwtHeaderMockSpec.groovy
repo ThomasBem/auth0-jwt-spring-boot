@@ -11,8 +11,7 @@ class JwtHeaderMockSpec extends Specification {
 
     void setup() {
         auth0JwtConfig = Mock(Auth0JwtConfig)
-
-        jwtHeader = new JwtHeaderMock(auth0JwtConfig: auth0JwtConfig)
+        jwtHeader = new JwtHeaderMock(auth0JwtConfig: auth0JwtConfig, jwtTestFile: Mock(JwtTestFile))
         jwtHeader.init()
     }
 
@@ -26,14 +25,14 @@ class JwtHeaderMockSpec extends Specification {
 
     def "Get JWT test claims"() {
         given:
-        jwtHeader = new JwtHeaderMock(auth0JwtConfig: auth0JwtConfig, jwtTestToken: testToken)
+        jwtHeader = new JwtHeaderMock(auth0JwtConfig: auth0JwtConfig, jwtTestToken: testToken, jwtTestFile: Mock(JwtTestFile))
         jwtHeader.init()
 
         when:
         def claims = jwtHeader.get()
 
         then:
-        1 * auth0JwtConfig.getJwtSecret() >> 'secret'
+        1 * auth0JwtConfig.getSecret() >> 'secret'
         claims.size() == 6
     }
 
@@ -42,7 +41,33 @@ class JwtHeaderMockSpec extends Specification {
         def jwt = jwtHeader.getJwt()
 
         then:
-        1 * auth0JwtConfig.getJwtSecret() >> "secret"
+        1 * auth0JwtConfig.getSecret() >> "secret"
+        jwt.isPresent()
+    }
+
+    def "Get JWT test claims from file"() {
+        given:
+        def jwtTestFile = Mock(JwtTestFile)
+        jwtHeader = new JwtHeaderMock(jwtTestFile: jwtTestFile)
+
+        when:
+        jwtHeader.init()
+        def claims = jwtHeader.get()
+
+        then:
+        1 * jwtTestFile.getClaims() >> ['key1': 'value1', 'key2': 'value2']
+        claims.size() == 2
+    }
+
+    def "Get JWT with test claims in file"() {
+        given:
+        jwtHeader = new JwtHeaderMock(auth0JwtConfig: auth0JwtConfig,  claims: ['key1': 'value1', 'key2': 'value2'])
+
+        when:
+        def jwt = jwtHeader.getJwt()
+
+        then:
+        1 * auth0JwtConfig.getSecret() >> 'secret'
         jwt.isPresent()
     }
 }

@@ -65,8 +65,7 @@ public class Auth0Jwt {
         Map<String, String> claims = new HashMap<>();
         Optional<String> jwt = jwtHeader.getJwt();
         if (jwt.isPresent()) {
-            byte[] key = config.getSecret();
-            Jws<Claims> jwtClaims = Jwts.parser().setSigningKey(key).parseClaimsJws(jwt.get());
+            Jws<Claims> jwtClaims = Jwts.parser().setSigningKey(config.getSecret()).parseClaimsJws(jwt.get());
             Claims body = jwtClaims.getBody();
             body.keySet().forEach(claimKey -> {
                 Object value = body.get(claimKey);

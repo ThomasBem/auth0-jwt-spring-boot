@@ -20,7 +20,7 @@
         <java.version>1.8</java.version>
 
         <lombok.version>1.16.10</lombok.version>
-        <jjwt.version>0.6.0</jjwt.version>
+        <jjwt.version>0.7.0</jjwt.version>
         <jasypt.version>1.7</jasypt.version>
         <jsonpath.version>2.2.0</jsonpath.version>
         <commons-codec.version>1.4</commons-codec.version>

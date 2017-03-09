@@ -67,7 +67,7 @@ Permission[] permissions = auth0Jwt.get("$.permissions[*]", Permission[].class);
 | jwt-key | The key used to store the jwt in the header. If the token is not found using 'jwt-key', it will try to use the standard Authorization-header | jwt |
 | jwt-test-mode | Enable test mode to return mock JWT | false |
 | jwt-test-token | If jwt-test-mode is enabled, return the configured token. If no token is configured, the default test-token is returned | |
-
+| jwt-test-token-file | If jwt-test-mode is enabled, use the content in the file `test-jwt.json` in classpath (or other filename if configured). If the default filename is present, it will be used. If jwt-test-token is also configured this will be prioritized. | test-jwt.json | 
 
 ### Default test-token
 
@@ -77,3 +77,19 @@ Permission[] permissions = auth0Jwt.get("$.permissions[*]", Permission[].class);
  - email: john.doe@test.com
  - email_verified: true
  - picture: https://s.gravatar.com/avatar
+ 
+ ### Example test-jwt.json
+ 
+ ````
+ {
+   "user_id": "auth0|1231232131231231",
+   "name": "john.doe@mail.com",
+   "nickname": "john.doe",
+   "email": "john.doe@mail.com",
+   "app_metadata": {
+     "roles": [
+       "ROLE_USER"
+     ]
+   }
+ }
+ ```
