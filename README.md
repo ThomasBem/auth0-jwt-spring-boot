@@ -81,15 +81,14 @@ Permission[] permissions = auth0Jwt.get("$.permissions[*]", Permission[].class);
  ### Example test-jwt.json
  
  ```json
- {
-   "user_id": "auth0|1231232131231231",
-   "name": "john.doe@mail.com",
-   "nickname": "john.doe",
-   "email": "john.doe@mail.com",
-   "app_metadata": {
-     "roles": [
-       "ROLE_USER"
-     ]
-   }
- }
+{
+ "user_id": "auth0|1231232131231231",
+ "name": "john.doe@mail.com",
+ "nickname": "john.doe",
+ "email": "john.doe@mail.com",
+ "app_metadata": {
+ "roles": [
+   "ROLE_USER"
+ ]}
+}
  ```
