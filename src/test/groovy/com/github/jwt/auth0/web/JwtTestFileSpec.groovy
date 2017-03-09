@@ -28,4 +28,17 @@ class JwtTestFileSpec extends Specification {
         content.size() == 5
     }
 
+    def "Return empty map when unable to read the file"() {
+        given:
+        def objectMapper = Mock(ObjectMapper)
+        JwtTestFile jwtTokenFile = new JwtTestFile(objectMapper: objectMapper, tokenFile: 'test-jwt.json')
+
+        when:
+        def claims = jwtTokenFile.getClaims()
+
+        then:
+        1 * objectMapper.readValue(_ as byte[], _ as Class) >> { throw new IOException('test exception') }
+        claims.isEmpty()
+    }
+
 }

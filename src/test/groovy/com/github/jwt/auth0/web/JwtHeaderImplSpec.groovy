@@ -28,9 +28,18 @@ class JwtHeaderImplSpec extends Specification {
         def jwt = jwtHeader.getJwt()
 
         then:
-        1 * request.getHeader(_ as String) >> this.jwt
+        1 * request.getHeader(HttpHeaders.AUTHORIZATION) >> this.jwt
         1 * config.getSecret() >> "secret".bytes
         jwt.isPresent()
+    }
+
+    def "Return empty claims map when unable to get JWT from header"() {
+        when:
+        def claims = jwtHeader.get()
+
+        then:
+        1 * request.getHeader(HttpHeaders.AUTHORIZATION) >>  { throw new IllegalStateException('test exception') }
+        claims.isEmpty()
     }
 
     def "Get JWT with unencoded secret"() {
