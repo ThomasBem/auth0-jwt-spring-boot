@@ -80,7 +80,7 @@ Permission[] permissions = auth0Jwt.get("$.permissions[*]", Permission[].class);
  
  ### Example test-jwt.json
  
- ````
+ ```
  {
    "user_id": "auth0|1231232131231231",
    "name": "john.doe@mail.com",
