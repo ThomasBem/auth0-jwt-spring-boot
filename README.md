@@ -17,14 +17,6 @@ Gradle
 compile('com.github.jwt.auth0:auth0-jwt-spring-boot:2.1.0')
 ```
 
-```
-repositories {
-    maven {
-        url  "http://dl.bintray.com/thomasbem/maven"
-    }
-}
-```
-
 ## Usage
 
 Add `@EnableAuth0JwtSpringBoot` to the Application-class (the class containing the `@SpringBootApplication`).  
