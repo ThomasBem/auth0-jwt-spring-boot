@@ -1,4 +1,4 @@
-package com.github.jwt.auth0.web.integration
+package com.github.jwt.auth0.web
 
 import com.github.jwt.auth0.config.Auth0JwtInitializer
 import com.github.jwt.auth0.web.JwtHeaderImpl

@@ -1,10 +1,7 @@
 package com.github.jwt.auth0.config;
 
 import com.github.jwt.auth0.auth0.Auth0Jwt;
-import com.github.jwt.auth0.web.JwtHeader;
-import com.github.jwt.auth0.web.JwtHeaderImpl;
-import com.github.jwt.auth0.web.JwtHeaderMock;
-import com.github.jwt.auth0.web.RequestUtil;
+import com.github.jwt.auth0.web.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +27,11 @@ public class Auth0JwtInitializer {
     @Bean
     public RequestUtil requestUtil() {
         return new RequestUtil();
+    }
+
+    @Bean
+    public JwtTestFile jwtTokenFile() {
+        return new JwtTestFile();
     }
 
     @Bean

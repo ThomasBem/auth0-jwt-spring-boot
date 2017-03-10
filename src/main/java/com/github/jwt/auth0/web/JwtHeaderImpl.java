@@ -9,7 +9,6 @@ import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.util.Base64Utils;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,14 +42,7 @@ public class JwtHeaderImpl implements JwtHeader {
     }
 
     private Map<String, String> createClaimsMap(String jwt) {
-        byte[] key = Base64Utils.decodeFromUrlSafeString(config.getJwtSecret());
-        Jws<Claims> claims;
-        if (config.isJwtSecretEncoded()) {
-            claims = Jwts.parser().setSigningKey(key).parseClaimsJws(jwt);
-        } else {
-            claims = Jwts.parser().setSigningKey(config.getJwtSecret()).parseClaimsJws(jwt);
-        }
-
+        Jws<Claims> claims = Jwts.parser().setSigningKey(config.getSecret()).parseClaimsJws(jwt);
         Claims body = claims.getBody();
 
         Map<String, String> values = new HashMap<>();
@@ -82,12 +74,7 @@ public class JwtHeaderImpl implements JwtHeader {
         }
 
         try {
-            if (config.isJwtSecretEncoded()) {
-                byte[] key = Base64Utils.decodeFromUrlSafeString(config.getJwtSecret());
-                Jwts.parser().setSigningKey(key).parse(jwt);
-            } else {
-                Jwts.parser().setSigningKey(config.getJwtSecret().getBytes()).parse(jwt);
-            }
+            Jwts.parser().setSigningKey(config.getSecret()).parse(jwt);
             return true;
         } catch (JwtException e) {
             log.error("Exception when parsing jwt", e);
