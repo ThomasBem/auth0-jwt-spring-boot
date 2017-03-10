@@ -78,7 +78,10 @@ Permission[] permissions = auth0Jwt.get("$.permissions[*]", Permission[].class);
  - email_verified: true
  - picture: https://s.gravatar.com/avatar
  
+ 
  ### Example test-jwt.json
+ 
+ [To encode/decode jwt](https://jwt.io/)
  
  ```json
 {
