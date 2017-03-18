@@ -2,12 +2,8 @@
 
 [![Build Status](https://travis-ci.org/ThomasBem/auth0-jwt-spring-boot.svg?branch=master)](https://travis-ci.org/ThomasBem/auth0-jwt-spring-boot)
 [ ![Download](https://api.bintray.com/packages/thomasbem/maven/auth0-jwt-spring-boot/images/download.svg) ](https://bintray.com/thomasbem/maven/auth0-jwt-spring-boot/_latestVersion)
-[![codecov](https://codecov.io/gh/ThomasBem/auth0-jwt-spring-boot/branch/master/graph/badge.svg)](https://codecov.io/gh/ThomasBem/auth0-jwt-spring-boot)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/89ea619c2ad34aadaf89bab23afd7c91)](https://www.codacy.com/app/thomasbem/auth0-jwt-spring-boot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ThomasBem/auth0-jwt-spring-boot&amp;utm_campaign=Badge_Grade)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/89ea619c2ad34aadaf89bab23afd7c91)](https://www.codacy.com/app/thomasbem/auth0-jwt-spring-boot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ThomasBem/auth0-jwt-spring-boot&amp;utm_campaign=Badge_Coverage)
-[![codebeat badge](https://codebeat.co/badges/fdb29997-4808-4cd9-819e-01b9c909f181)](https://codebeat.co/projects/github-com-thomasbem-auth0-jwt-spring-boot)
-[![Coverage Status](https://coveralls.io/repos/github/ThomasBem/auth0-jwt-spring-boot/badge.svg?branch=master)](https://coveralls.io/github/ThomasBem/auth0-jwt-spring-boot?branch=master)
-
 
 Integrates [Auth0](https://auth0.com/) [JWT](https://jwt.io) with [Spring Boot](http://projects.spring.io/spring-boot).
  
