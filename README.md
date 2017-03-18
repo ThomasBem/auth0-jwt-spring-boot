@@ -15,7 +15,7 @@ Integrates [Auth0](https://auth0.com/) [JWT](https://jwt.io) with [Spring Boot](
 
 Gradle
 ```
-compile('com.github.jwt.auth0:auth0-jwt-spring-boot:2.1.0')
+compile('com.github.jwt.auth0:auth0-jwt-spring-boot:<version>')
 ```
 
 ## Usage
