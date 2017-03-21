@@ -19,9 +19,7 @@ class JwtHeaderImplSpec extends Specification {
         config = Mock(Auth0JwtConfig) {
             getJwtKey() >> "jwt"
         }
-        request = Mock(HttpServletRequest) {
-            getHeaderNames() >> Collections.enumeration(["jwt"])
-        }
+        request = Mock(HttpServletRequest)
         jwtHeader = new JwtHeaderImpl(config: config, request: request)
     }
 
