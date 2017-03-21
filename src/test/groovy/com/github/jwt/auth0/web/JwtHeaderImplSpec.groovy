@@ -2,14 +2,14 @@ package com.github.jwt.auth0.web
 
 import com.github.jwt.auth0.config.Auth0JwtConfig
 import io.jsonwebtoken.JwtException
-import org.apache.commons.codec.binary.Base64
 import org.springframework.http.HttpHeaders
 import spock.lang.Specification
 
 import javax.servlet.http.HttpServletRequest
 
 class JwtHeaderImplSpec extends Specification {
-    private final String jwt = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0ZXN0LWtleSI6InRlc3QtdmFsdWUifQ.INFA_0gyIYnY7G_N8XzLaBxlE94YYRIX1Cgc76yVyOM'
+    private
+    final String jwt = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0ZXN0LWtleSI6InRlc3QtdmFsdWUifQ.INFA_0gyIYnY7G_N8XzLaBxlE94YYRIX1Cgc76yVyOM'
 
     private JwtHeaderImpl jwtHeader
     private Auth0JwtConfig config
@@ -19,7 +19,9 @@ class JwtHeaderImplSpec extends Specification {
         config = Mock(Auth0JwtConfig) {
             getJwtKey() >> "jwt"
         }
-        request = Mock(HttpServletRequest)
+        request = Mock(HttpServletRequest) {
+            getHeaderNames() >> Collections.enumeration(["jwt"])
+        }
         jwtHeader = new JwtHeaderImpl(config: config, request: request)
     }
 
@@ -38,7 +40,7 @@ class JwtHeaderImplSpec extends Specification {
         def claims = jwtHeader.get()
 
         then:
-        1 * request.getHeader(HttpHeaders.AUTHORIZATION) >>  { throw new IllegalStateException('test exception') }
+        1 * request.getHeader(HttpHeaders.AUTHORIZATION) >> { throw new IllegalStateException('test exception') }
         claims.isEmpty()
     }
 

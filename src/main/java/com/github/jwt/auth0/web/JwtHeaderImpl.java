@@ -12,10 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @EnableEncryptableProperties
@@ -54,18 +51,34 @@ public class JwtHeaderImpl implements JwtHeader {
     }
 
     public Optional<String> getJwt() {
-        String jwt = request.getHeader(config.getJwtKey());
-        if (StringUtils.isEmpty(jwt)) {
-            String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
-            if (!StringUtils.isEmpty(authorization)) {
-                jwt = authorization.replace("Bearer ", "");
+        if (hasJWTHeader()) {
+            String jwt = request.getHeader(config.getJwtKey());
+            if (StringUtils.isEmpty(jwt)) {
+                String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
+                if (!StringUtils.isEmpty(authorization)) {
+                    jwt = authorization.replace("Bearer ", "");
+                }
             }
-        }
-        if (validToken(jwt)) {
-            return Optional.ofNullable(jwt);
+            if (validToken(jwt)) {
+                return Optional.ofNullable(jwt);
+            } else {
+                return Optional.empty();
+            }
         } else {
+            log.info("No JWT found in header");
             return Optional.empty();
         }
+    }
+
+    private boolean hasJWTHeader() {
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames != null && headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            if (config.getJwtKey().equals(headerName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean validToken(String jwt) {
