@@ -68,7 +68,6 @@ public class JwtHeaderImpl implements JwtHeader {
                 return Optional.empty();
             }
         } catch (IllegalStateException e) {
-            log.info("No JWT found in header");
             return Optional.empty();
         }
     }
