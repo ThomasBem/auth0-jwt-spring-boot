@@ -10,7 +10,7 @@ Integrates [Auth0](https://auth0.com/) [JWT](https://jwt.io) with [Spring Boot](
 
 Gradle
 ```
-compile('com.github.jwt.auth0:auth0-jwt-spring-boot:2.1.3')
+compile('com.github.jwt.auth0:auth0-jwt-spring-boot:3.0.0')
 ```
 
 ## Usage
@@ -36,13 +36,11 @@ To get a formatted name from the Auth0 nickname:
 String name = auth0Jwt.getName();
 ```
 
-**Get object with JsonPath**  
-Get object from app_metadata in the JWT using JsonPath. In this example an array of permissions is configured in auth0:
+**Get object**  
+Get object from app_metadata in the JWT. Send an object that matches your Auth0 app_metadata content and have it serialized to this.
 ```
-Permission[] permissions = auth0Jwt.get("$.permissions[*]", Permission[].class);
+Permission permission = auth0Jwt.get(Permission.class);
 ```
-[JsonPath documentation](https://github.com/jayway/JsonPath)
-
 
 ## Configuration
 
