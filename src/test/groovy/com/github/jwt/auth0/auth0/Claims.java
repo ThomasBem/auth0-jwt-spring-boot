@@ -5,12 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Permission {
-    private String environment;
-    private Claims claims;
+public class Claims {
+    private ArrayList<String> roles;
+    private String company;
+    private String organization;
 }
-

@@ -13,7 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.util.*;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -46,15 +50,15 @@ public class Auth0Jwt {
         return Optional.empty();
     }
 
-    public <T> T get(String jsonPath, Class<T> type) {
+    public <T> T get(Class<T> type) {
         Map<String, String> jwtData = getJwtData();
         String metadata = jwtData.get(APP_METADATA);
         if (metadata == null || "".equals(metadata)) {
             throw new IllegalArgumentException("Could not find app_metadata in jwt claims");
         } else {
             try {
-                return mapToObject(jsonPath, metadata, type);
-            } catch (PathNotFoundException e) {
+                return mapToObject(metadata, type);
+            } catch (PathNotFoundException | IOException e) {
                 log.warn(e.getMessage());
                 return null;
             }
@@ -77,9 +81,8 @@ public class Auth0Jwt {
     }
 
     @SuppressWarnings("unchecked")
-    private <T> T mapToObject(String jsonPath, String metadata, Class<T> type) {
+    private <T> T mapToObject(String metadata, Class<T> type) throws IOException {
         String json = JsonPath.parse(metadata.replaceAll("=", ":")).jsonString();
-        List<Map<String, Object>> values = JsonPath.parse(json).read(jsonPath, List.class);
-        return objectMapper.convertValue(values, type);
+        return objectMapper.readValue(json, type);
     }
 }
