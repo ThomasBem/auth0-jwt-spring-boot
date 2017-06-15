@@ -10,6 +10,8 @@ import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.RestTemplate
 import spock.lang.Specification
 
+import java.nio.charset.Charset
+
 class RequestUtilSpec extends Specification {
     private RequestUtil requestUtil
     private JwtHeaderImpl jwtHeader
