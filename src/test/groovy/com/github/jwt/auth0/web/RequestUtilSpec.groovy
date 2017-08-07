@@ -6,11 +6,10 @@ import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.RestTemplate
 import spock.lang.Specification
-
-import java.nio.charset.Charset
 
 class RequestUtilSpec extends Specification {
     private RequestUtil requestUtil
@@ -35,6 +34,18 @@ class RequestUtilSpec extends Specification {
         }
         1 * jwtHeader.getJwt() >> Optional.empty()
         responseEntity.statusCode == HttpStatus.NOT_FOUND
+    }
+
+    def "Return status code 200 OK with body content"() {
+        when:
+        def responseEntity = requestUtil.exchange("http://localhost", HttpMethod.POST, String, "A content")
+
+        then:
+        1 * restTemplate.exchange(_ as String, _ as HttpMethod, _ as HttpEntity, _ as Class) >> ResponseEntity.ok("A new content")
+        1 * jwtHeader.getJwt() >> Optional.empty()
+        responseEntity.statusCode == HttpStatus.OK
+        responseEntity.body != "A content"
+        responseEntity.body == "A new content"
     }
 
     def "No authorization header when missing username/password"() {
@@ -84,5 +95,23 @@ class RequestUtilSpec extends Specification {
         2 * config.getPassword() >> "test-password"
         httpEntity.getHeaders().getFirst(HttpHeaders.AUTHORIZATION) == "Basic " + encodedAuthorization
         httpEntity.getHeaders().getFirst("jwt") == "test-jwt"
+        httpEntity.getBody() == null
+    }
+
+    def "Create request entity with basic auth, jwt and body"() {
+        given:
+        def encodedAuthorization = Base64.encodeBase64String("test-user:test-password".getBytes())
+
+        when:
+        def httpEntity = requestUtil.createRequestEntity("This content")
+
+        then:
+        1 * jwtHeader.getJwt() >> Optional.of("test-jwt")
+        1 * config.getJwtKey() >> "jwt"
+        2 * config.getUsername() >> "test-user"
+        2 * config.getPassword() >> "test-password"
+        httpEntity.getHeaders().getFirst(HttpHeaders.AUTHORIZATION) == "Basic " + encodedAuthorization
+        httpEntity.getHeaders().getFirst("jwt") == "test-jwt"
+        httpEntity.getBody() == "This content"
     }
 }

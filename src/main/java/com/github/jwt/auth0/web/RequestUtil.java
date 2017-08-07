@@ -29,8 +29,16 @@ public class RequestUtil {
     private JwtHeader jwtHeader;
 
     public <T> ResponseEntity<T> exchange(String url, HttpMethod method, Class<T> responseType) {
+        return createExchangeRequest(url, method, responseType, null);
+    }
+
+    public <T> ResponseEntity<T> exchange(String url, HttpMethod method, Class<T> responseType, Object body) {
+        return createExchangeRequest(url, method, responseType, body);
+    }
+
+    private <T> ResponseEntity<T> createExchangeRequest(String url, HttpMethod method, Class<T> responseType, Object body) {
         try {
-            ResponseEntity<T> responseEntity = restTemplate.exchange(url, method, createRequestEntity(), responseType);
+            ResponseEntity<T> responseEntity = restTemplate.exchange(url, method, createRequestEntity(body), responseType);
             return ResponseEntity.status(responseEntity.getStatusCode()).body(responseEntity.getBody());
         } catch (HttpClientErrorException e) {
             log.warn("Http client error, url:{} status-code:{} message:{}", url, e.getStatusCode(), e.getMessage());
@@ -39,9 +47,17 @@ public class RequestUtil {
     }
 
     public HttpEntity createRequestEntity() {
+        return new HttpEntity<>(null, createAuthorizationHeaderWithJwtHeaderIfPresent());
+    }
+
+    public HttpEntity createRequestEntity(Object body) {
+        return new HttpEntity<>(body, createAuthorizationHeaderWithJwtHeaderIfPresent());
+    }
+
+    private HttpHeaders createAuthorizationHeaderWithJwtHeaderIfPresent() {
         HttpHeaders header = createAuthorizationHeader();
         jwtHeader.getJwt().ifPresent(jwtToken -> header.add(config.getJwtKey(), jwtToken));
-        return new HttpEntity<>(null, header);
+        return header;
     }
 
     private HttpHeaders createAuthorizationHeader() {
@@ -54,6 +70,4 @@ public class RequestUtil {
         }
         return header;
     }
-
-
 }
