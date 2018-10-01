@@ -8,10 +8,21 @@ Integrates [Auth0](https://auth0.com/) [JWT](https://jwt.io) with [Spring Boot](
  
 ## Installation
 
+For Spring-Boot 1.X use:
+
 Gradle
 ```
 compile('com.github.jwt.auth0:auth0-jwt-spring-boot:3.1.0')
 ```
+
+For Spring-Boot 2.X use:
+
+Gradle
+```
+compile('com.github.jwt.auth0:auth0-jwt-spring-boot:4.0.0')
+```
+
+Going forward updates will only be made for 2.X compatibility.
 
 ## Usage
 
